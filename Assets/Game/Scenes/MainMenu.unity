@@ -513,7 +513,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ba969093fa43d4e95b5bd7ebdd3362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenSetting: 1
+  buttonType: 2
+  buttonCondition: 1
+  goToLevel: 
 --- !u!1 &674348536
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +924,7 @@ GameObject:
   - component: {fileID: 1166625309}
   - component: {fileID: 1166625308}
   - component: {fileID: 1166625307}
+  - component: {fileID: 1166625310}
   m_Layer: 0
   m_Name: GameplayBtn
   m_TagString: Untagged
@@ -992,19 +995,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1166625308}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1686340705}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: OpenLevelSelectKH
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1166625308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,6 +1034,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166625305}
   m_CullTransparentMesh: 1
+--- !u!114 &1166625310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166625305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ba969093fa43d4e95b5bd7ebdd3362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 0
+  buttonCondition: 0
+  goToLevel: Level 1
 --- !u!1 &1254978370
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1061,7 @@ GameObject:
   - component: {fileID: 1254978374}
   - component: {fileID: 1254978373}
   - component: {fileID: 1254978372}
+  - component: {fileID: 1254978375}
   m_Layer: 0
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -1125,19 +1132,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1254978373}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1686340705}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: ExitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1254978373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,6 +1171,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254978370}
   m_CullTransparentMesh: 1
+--- !u!114 &1254978375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254978370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ba969093fa43d4e95b5bd7ebdd3362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 3
+  buttonCondition: 0
+  goToLevel: 
 --- !u!1 &1316592049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,9 +1661,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuObject: {fileID: 674348536}
-  rewardObject: {fileID: 0}
-  lSFollowLineObject: {fileID: 0}
-  lSKnowHijaiyahObject: {fileID: 0}
 --- !u!1 &1711856703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,10 +1926,6 @@ PrefabInstance:
     - target: {fileID: 3910685548694109422, guid: ef860b8d8b6d5ce4ea00785d1b9c6629, type: 3}
       propertyPath: m_Name
       value: LevelController
-      objectReference: {fileID: 0}
-    - target: {fileID: 3910685548831713791, guid: ef860b8d8b6d5ce4ea00785d1b9c6629, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef860b8d8b6d5ce4ea00785d1b9c6629, type: 3}
