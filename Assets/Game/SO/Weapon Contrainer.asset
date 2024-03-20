@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eaa7f9ddef3af64dbc18f1d400da708, type: 3}
+  m_Name: Weapon Contrainer
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 11400000, guid: fdbdc3e81a7b98b4fb25028e5b2ffcee, type: 2}
+  - {fileID: 11400000, guid: 43c05ba497bc224498e6d68b8656183d, type: 2}
+  - {fileID: 11400000, guid: fce7c3fc9ca028f4890d3881b07d3cd9, type: 2}
+  - {fileID: 11400000, guid: 343345607ee3bcc46b03dff921c238dd, type: 2}

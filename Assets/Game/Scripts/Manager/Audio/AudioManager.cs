@@ -7,157 +7,159 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    // getting audio manager in other script
-    public static AudioManager Instance;
+	// getting audio manager in other script
+	public static AudioManager Instance;
 
-    // array sound value
-    [SerializeField] Sound[] sounds;
+	// array sound value
+	[SerializeField] Sound[] sounds;
 
-    private void Awake()
-    {
-        // checking instance, if null instance is this
-        if (Instance == null) Instance = this;
-        else Destroy(this);
+	private void Awake()
+	{
+		// checking instance, if null instance is this
+		if (Instance == null)
+		{
+			Instance = this;
+			// to spawn component
+			foreach (Sound s in Instance.sounds)
+			{
+				s.source = gameObject.AddComponent<AudioSource>();
+				s.source.loop = s.loop;
+				s.source.clip = s.sound;
+				s.source.volume = s.volume;
+			}
+		}
+		else
+		{
+			Destroy(this);
+		}
+	}
 
-        // dont destroy on loading level
-        DontDestroyOnLoad(this);
+	public static void PlaySound(string soundName)
+	{
+		// check instance, if null return
+		if (Instance == null) return;
+		// check sounds array, if null return
+		if (Instance.sounds.Length == 0) return;
 
-        // to spawn component
-        foreach (Sound s in Instance.sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.loop = s.loop;
-            s.source.clip = s.sound;
-            s.source.volume = s.volume;
-        }
-    }
+		// finding sound by string
+		Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
 
-    public static void PlaySound(string soundName)
-    {
-        // check instance, if null return
-        if (Instance == null) return;
-        // check sounds array, if null return
-        if (Instance.sounds.Length == 0) return;
+		// if sound is null return / not play
+		if (sound == null && sound.sound == null) return;
 
-        // finding sound by string
-        Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
+		// play sound
+		sound.source.Play();
+	}
 
-        // if sound is null return / not play
-        if (sound == null && sound.sound == null) return;
+	public static void StopSound(string soundName, float Duration)
+	{
+		// check instance, if null return
+		if (Instance == null) return;
+		// check sounds array, if null return
+		if (Instance.sounds.Length == 0) return;
 
-        // play sound
-        sound.source.Play();
-    }
+		// finding sound by string
+		Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
 
-    public static void StopSound(string soundName, float Duration)
-    {
-        // check instance, if null return
-        if (Instance == null) return;
-        // check sounds array, if null return
-        if (Instance.sounds.Length == 0) return;
+		// if sound is null return / not play
+		if (sound == null) return;
 
-        // finding sound by string
-        Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
+		// fading sound
+		sound.source.DOFade(0, Duration).OnComplete(() =>
+		{
+			// if complete stopping sound
+			sound.source.Stop();
+			// back sound volume to normal
+			sound.source.volume = sound.volume;
+		});
+	}
 
-        // if sound is null return / not play
-        if (sound == null) return;
+	public static void MuteSound(string name, bool isMute)
+	{
+		// check instance, if null return
+		if (Instance == null) return;
+		// check sounds array, if null return
+		if (Instance.sounds.Length == 0) return;
 
-        // fading sound
-        sound.source.DOFade(0, Duration).OnComplete(() =>
-        {
-            // if complete stopping sound
-            sound.source.Stop();
-            // back sound volume to normal
-            sound.source.volume = sound.volume;
-        });
-    }
+		// finding sound by string
+		Sound sound = Array.Find(Instance.sounds, s => s.name == name);
 
-    public static void MuteSound(string name, bool isMute)
-    {
-        // check instance, if null return
-        if (Instance == null) return;
-        // check sounds array, if null return
-        if (Instance.sounds.Length == 0) return;
+		// if sound is null return / not play
+		if (sound == null) return;
 
-        // finding sound by string
-        Sound sound = Array.Find(Instance.sounds, s => s.name == name);
+		sound.source.volume = isMute ? sound.volume : 0;
+	}
 
-        // if sound is null return / not play
-        if (sound == null) return;
+	public static void MuteAllSound(bool isMute)
+	{
+		// check instance, if null return
+		if (Instance == null) return;
+		// check sounds array, if null return
+		if (Instance.sounds.Length == 0) return;
 
-        sound.source.volume = isMute ? sound.volume : 0;
-    }
+		// to spawn component
+		foreach (Sound s in Instance.sounds)
+		{
+			if (s == null) continue;
 
-    public static void MuteAllSound(bool isMute)
-    {
-        // check instance, if null return
-        if (Instance == null) return;
-        // check sounds array, if null return
-        if (Instance.sounds.Length == 0) return;
+			s.source.volume = isMute ? 0 : s.volume;
+		}
+	}
 
-        // to spawn component
-        foreach (Sound s in Instance.sounds)
-        {
-            if (s == null) continue;
+	public static void MuteBgm(bool isMute)
+	{
+		// check instance, if null return
+		if (Instance == null) return;
+		// check sounds array, if null return
+		if (Instance.sounds.Length == 0) return;
 
-            s.source.volume = isMute ? 0 : s.volume;
-        }
-    }
+		// to spawn component
+		foreach (Sound s in Instance.sounds)
+		{
+			if (s == null) continue;
 
-    public static void MuteBgm(bool isMute)
-    {
-        // check instance, if null return
-        if (Instance == null) return;
-        // check sounds array, if null return
-        if (Instance.sounds.Length == 0) return;
+			if (s.type != SoundType.BgmType) continue;
 
-        // to spawn component
-        foreach (Sound s in Instance.sounds)
-        {
-            if (s == null) continue;
+			s.source.volume = isMute ? 0 : s.volume;
+		}
+	}
 
-            if (s.type != SoundType.BgmType) continue;
+	public static void MuteSfx(bool isMute)
+	{
+		// check instance, if null return
+		if (Instance == null) return;
+		// check sounds array, if null return
+		if (Instance.sounds.Length == 0) return;
 
-            s.source.volume = isMute ? 0 : s.volume;
-        }
-    }
+		// to spawn component
+		foreach (Sound s in Instance.sounds)
+		{
+			if (s == null) continue;
 
-    public static void MuteSfx(bool isMute)
-    {
-        // check instance, if null return
-        if (Instance == null) return;
-        // check sounds array, if null return
-        if (Instance.sounds.Length == 0) return;
+			if (s.type != SoundType.SfxType) continue;
 
-        // to spawn component
-        foreach (Sound s in Instance.sounds)
-        {
-            if (s == null) continue;
+			s.source.volume = isMute ? 0 : s.volume;
+		}
+	}
 
-            if (s.type != SoundType.SfxType) continue;
+	public static AudioSource GetAudioSource(string soundName)
+	{
+		// check instance, if null return
+		if (Instance == null) return null;
 
-            s.source.volume = isMute ? 0 : s.volume;
-        }
-    }
+		// finding sound by string
+		Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
 
-    public static AudioSource GetAudioSource(string soundName)
-    {
-        // check instance, if null return
-        if (Instance == null) return null;
+		// returning audio source get by string
+		return sound == null ? null : sound.source;
+	}
 
-        // finding sound by string
-        Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
+	public static AudioClip GetClipAudio(string soundName)
+	{
+		if (Instance == null) return null;
 
-        // returning audio source get by string
-        return sound == null ? null : sound.source;
-    }
+		Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
 
-    public static AudioClip GetClipAudio(string soundName)
-    {
-        if (Instance == null) return null;
-
-        Sound sound = Array.Find(Instance.sounds, s => s.name == soundName);
-
-        return sound.sound;
-    }
+		return sound.sound;
+	}
 }
