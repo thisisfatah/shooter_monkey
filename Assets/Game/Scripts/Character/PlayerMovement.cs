@@ -2,17 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] PlayerController2D controller;
+	[SerializeField] PlayerController2D controller;
 	[SerializeField] Animator anim;
 
 	[SerializeField] float runSpeed = 40f;
 	float horizontalMove = 0f;
 
+	bool multiplierRunSpeed = false;
+	bool canChangeMonkeySmall = true;
+
 	bool jump = false;
-	bool crouch = false;
+	float durationMonkeyChange;
+
+	[Space(10)]
+	[SerializeField] Image ChangeMonkeyImg;
+	[SerializeField] Sprite changeSprite;
+	Sprite defaultSprite;
+
+	private void Start()
+	{
+		defaultSprite = ChangeMonkeyImg.sprite;
+	}
 
 	private void Update()
 	{
@@ -20,19 +34,38 @@ public class PlayerMovement : MonoBehaviour
 
 		anim.SetFloat("Speed", Math.Abs(horizontalMove));
 
+		if (SkillData.CanSkill)
+		{
+			if (canChangeMonkeySmall)
+			{
+				if (Input.GetKeyDown(KeyCode.Q))
+				{
+					multiplierRunSpeed = true;
+					StartCoroutine(DelayChangeMonkey());
+					SkillData.CanSkill = false;
+				}
+			}
+		}
+
+		if (multiplierRunSpeed)
+		{
+			if (durationMonkeyChange >= 20f)
+			{
+				transform.localScale = new Vector3(1.0f, 1.0f);
+				durationMonkeyChange = 0f;
+				multiplierRunSpeed = false;
+				SkillData.CanSkill = true;
+			}
+			else
+			{
+				durationMonkeyChange += Time.deltaTime;
+			}
+		}
+
 		if (Input.GetButtonDown("Jump"))
 		{
 			jump = true;
 			anim.SetBool("IsJumping", true);
-		}
-
-		if(Input.GetButtonDown("Crouch"))
-		{
-			crouch = true;
-		}
-		else if (Input.GetButtonUp("Crouch"))
-		{
-			crouch = false;
 		}
 	}
 
@@ -43,7 +76,17 @@ public class PlayerMovement : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+		controller.Move(horizontalMove * Time.fixedDeltaTime, jump, multiplierRunSpeed);
 		jump = false;
+	}
+
+	IEnumerator DelayChangeMonkey()
+	{
+		ChangeMonkeyImg.sprite = changeSprite;
+		canChangeMonkeySmall = false;
+		transform.localScale = new Vector3(0.5f, 0.5f);
+		yield return new WaitForSeconds(200);
+		ChangeMonkeyImg.sprite = defaultSprite;
+		canChangeMonkeySmall = true;
 	}
 }

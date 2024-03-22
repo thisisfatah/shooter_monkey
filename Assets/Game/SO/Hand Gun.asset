@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225aabd851d3ad948b56f1d7643d4556, type: 3}
   m_Name: Hand Gun
   m_EditorClassIdentifier: 
-  sprite: {fileID: -1491756652, guid: d5bc359815aae0f4790f46dfaf07d760, type: 3}
+  sprite: {fileID: -1094615910, guid: d5bc359815aae0f4790f46dfaf07d760, type: 3}
   ammo: 18
   maxAmmo: 18
   damage: 20

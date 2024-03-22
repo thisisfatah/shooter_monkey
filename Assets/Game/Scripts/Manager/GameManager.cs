@@ -24,6 +24,18 @@ public class GameManager : MonoBehaviour
 		}
 		private set { }
 	}
+
+	public static int GetBulletDamage
+	{
+		get
+		{
+			if (Instance.weaponData != null) return Instance.weaponData.damage;
+
+			return 0;
+		}
+		private set { }
+	}
+
 	public ShootSystem GetShootSystem { get { return shootSystem; } }
 	public Weapon GetWeapon { get { return weapon; } }
 
@@ -42,6 +54,8 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 		ChangeWeapon(1);
+
+		weaponContainer.ResetAmmo();
 	}
 
 	private void Update()

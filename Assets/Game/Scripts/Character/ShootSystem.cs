@@ -61,7 +61,7 @@ public class ShootSystem : MonoBehaviour
 			if (GameManager.GetAmmo > 0)
 			{
 				GameObject gO = Instantiate(bulletPrefab) as GameObject;
-				gO.GetComponent<Bullet>().Init(transform.position, Quaternion.Euler(0.0f, 0.0f, rotationZ), direction);
+				gO.GetComponent<Bullet>().Init(transform.position, Quaternion.Euler(0.0f, 0.0f, rotationZ), direction, GameManager.GetBulletDamage);
 				GameManager.DecreaseAmmo();
 			}
 			yield return new WaitForSeconds(0.1f);

@@ -24,7 +24,7 @@ public class TerrainContainer : MonoBehaviour
 		{
 			float xPos = shape.spline.GetPosition(i + 1).x + distanceBwtPoints;
 			float noise = Mathf.PerlinNoise(i * Random.Range(1f, 2f), 0);
-			shape.spline.InsertPointAt(i + 2, new Vector3(xPos, Random.Range(minYPoint,maxYPoint) * noise));
+			shape.spline.InsertPointAt(i + 2, new Vector3(xPos, Random.Range(minYPoint,maxYPoint) * 1));
 		}
 
 		for (int i = 0; i < numOfPoints; i++)
