@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
 	{
 		if (collision.tag == targetShoot)
 		{
-			Debug.Log(bulletDamage.ToString());
+			collision.GetComponent<CharacterHealth>().IncreaseHealth(bulletDamage);
 			Destroy(gameObject);
 		}
 	}

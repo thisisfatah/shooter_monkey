@@ -1,21 +1,10 @@
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : CharacterHealth
 {
-	[SerializeField] float health;
-	[SerializeField] float maxhealth;
 	[SerializeField] Image healthImg;
-	[SerializeField] SpriteRenderer spriteRenderer;
-	Material originalMaterial;
-	[SerializeField] Material flashMaterial;
-	[SerializeField] float durationFlash;
-
-	Coroutine flashRoutine;
 
 	[Space(10)]
 	bool canMultipleHelath = true;
@@ -27,9 +16,8 @@ public class PlayerHealth : MonoBehaviour
 
 	private void Start()
 	{
-		healthImg.fillAmount = health / maxhealth;
+		healthImg.fillAmount = Health / MaxHealth;
 
-		originalMaterial = spriteRenderer.material;
 		defaultSprite = ChangeMonkeyImg.sprite;
 	}
 
@@ -46,10 +34,7 @@ public class PlayerHealth : MonoBehaviour
 			{
 				if (Input.GetKeyDown(KeyCode.E))
 				{
-					multipleHealth = true;
-					health = 200;
-					healthImg.fillAmount = health / 200;
-					SkillData.CanSkill = false;
+					MultipleHealth();
 					StartCoroutine(DelayChangeMonkey());
 				}
 			}
@@ -60,8 +45,8 @@ public class PlayerHealth : MonoBehaviour
 			if (durationMonkeyChange >= 20)
 			{
 				durationMonkeyChange = 0;
-				health = maxhealth;
-				healthImg.fillAmount = health / maxhealth;
+				Health = MaxHealth;
+				healthImg.fillAmount = Health / MaxHealth;
 				transform.localScale = new Vector3(1f, 1f);
 				SkillData.CanSkill = true;
 			}
@@ -70,6 +55,14 @@ public class PlayerHealth : MonoBehaviour
 				durationMonkeyChange += Time.deltaTime;
 			}
 		}
+	}
+
+	public void MultipleHealth()
+	{
+		multipleHealth = true;
+		Health = 200;
+		healthImg.fillAmount = Health / 200;
+		SkillData.CanSkill = false;
 	}
 
 	private IEnumerator DelayChangeMonkey()
@@ -82,48 +75,29 @@ public class PlayerHealth : MonoBehaviour
 		canMultipleHelath = true;
 	}
 
-	public void IncreaseHealth(float value)
+	public override void IncreaseHealth(float value)
 	{
-		health -= value;
-		healthImg.fillAmount = health / maxhealth;
-		Flash();
-		if (health <= 0)
+		base.IncreaseHealth(value);
+		if (multipleHealth)
 		{
-			Debug.Log("Game Over");
+			healthImg.fillAmount = Health / 200;
+		}
+		else
+		{
+			healthImg.fillAmount = Health / MaxHealth;
 		}
 	}
 
-	public void DecreaseHealth(float value)
+	public override void DecreaseHealth(float value)
 	{
-		if (health <= maxhealth)
+		base.DecreaseHealth(value);
+		if (multipleHealth)
 		{
-			health += value;
-			healthImg.fillAmount = health / maxhealth;
+			healthImg.fillAmount = Health / 200;
 		}
-	}
-
-	public void FullHealth()
-	{
-		health = maxhealth;
-		healthImg.fillAmount = health / maxhealth;
-	}
-
-	private void Flash()
-	{
-		if (flashRoutine != null)
+		else
 		{
-			StopCoroutine(flashRoutine);
+			healthImg.fillAmount = Health / MaxHealth;
 		}
-
-		flashRoutine = StartCoroutine(FlashDelay());
-	}
-
-	private IEnumerator FlashDelay()
-	{
-		spriteRenderer.material = flashMaterial;
-
-		yield return new WaitForSeconds(durationFlash);
-
-		spriteRenderer.material = originalMaterial;
 	}
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - Letter
   layers:
   - Default
   - TransparentFX

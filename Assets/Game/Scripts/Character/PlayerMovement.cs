@@ -12,10 +12,10 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] float runSpeed = 40f;
 	float horizontalMove = 0f;
 
-	bool multiplierRunSpeed = false;
-	bool canChangeMonkeySmall = true;
 
-	bool jump = false;
+	[HideInInspector] public bool multiplierRunSpeed = false;
+	[HideInInspector] public bool jump = false;
+	bool canChangeMonkeySmall = true;
 	float durationMonkeyChange;
 
 	[Space(10)]

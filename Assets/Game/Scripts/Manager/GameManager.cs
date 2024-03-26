@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance;
 
+	[SerializeField] GameObject playerObject;
 	[SerializeField] ShootSystem shootSystem;
 	[SerializeField] Weapon weapon;
 	[SerializeField] WeaponContainer weaponContainer;
@@ -33,6 +34,12 @@ public class GameManager : MonoBehaviour
 
 			return 0;
 		}
+		private set { }
+	}
+
+	public static GameObject GetPlayer
+	{
+		get { return Instance.playerObject; }
 		private set { }
 	}
 
