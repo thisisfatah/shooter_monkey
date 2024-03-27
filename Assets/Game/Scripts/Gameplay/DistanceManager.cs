@@ -13,6 +13,7 @@ public class DistanceManager : MonoBehaviour
 	[SerializeField] EnemySpawn enemySpawnSoldier;
 	[SerializeField] EnemySpawn enemySpawnSquadLeader;
 	[SerializeField] EnemySpawn enemySpawnCommanders;
+	[HideInInspector] public double distanceFloor;
 
 	private void Start()
 	{
@@ -22,7 +23,7 @@ public class DistanceManager : MonoBehaviour
 	private void Update()
 	{
 		float distance = Vector3.Distance(startPoint, GameManager.GetPlayer.transform.position);
-		double distanceFloor = Math.Floor(distance);
+		distanceFloor = Math.Floor(distance);
 		if (distance >= 0)
 		{
 			distanceText.text = distanceFloor.ToString();

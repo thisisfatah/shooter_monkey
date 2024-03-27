@@ -12,7 +12,7 @@ public class PlayerController2D : MonoBehaviour
 {
 	[SerializeField] float m_JumpForce = 400f;
 	[Range(0, .3f)][SerializeField] float m_MovementSmoothing = .05f;
-	[Range(1, 2)][SerializeField] float m_multipleSpeed = 1.5f;
+	[Range(1, 2)] public float m_multipleSpeed = 1.5f;
 	[SerializeField] bool m_AirControl = false;
 	[SerializeField] LayerMask m_WhatIsGround;
 	[SerializeField] Transform m_GroundCheck;

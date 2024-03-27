@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [System.Serializable]
 enum ButtonType
 {
 	LoadLevel,
+	Restart,
 	Pause,
 	Settings,
 	Exit
@@ -27,6 +29,9 @@ public class SettingButton : MonoBehaviour
 			case ButtonType.LoadLevel:
 				button.onClick.AddListener(delegate { LoadLevel(goToLevel); });
 				break;
+			case ButtonType.Restart:
+				button.onClick.AddListener(delegate { LoadLevel(SceneManager.GetActiveScene().name); });
+				break;
 			case ButtonType.Pause:
 				button.onClick.AddListener(delegate { CheckPauseGame(buttonCondition); });
 				break;
@@ -34,7 +39,7 @@ public class SettingButton : MonoBehaviour
 				button.onClick.AddListener(delegate { OpenSettings(buttonCondition); });
 				break;
 			case ButtonType.Exit:
-				ExitGame();
+				button.onClick.AddListener(ExitGame);
 				break;
 			default:
 				break;
@@ -45,6 +50,7 @@ public class SettingButton : MonoBehaviour
 	{
 		if (levelToLoad == "") return;
 
+		ResumeGame();
 		LevelController.LoadLevel(levelToLoad);
 	}
 

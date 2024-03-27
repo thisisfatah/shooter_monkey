@@ -159,6 +159,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5270115101953618274}
   flashMaterial: {fileID: 2100000, guid: 711cef26ef1ac7749ac2250d22f088df, type: 2}
   durationFlash: 0.1
-  OnLandEvent:
+  OnDieEvent:
     m_PersistentCalls:
       m_Calls: []
+  score: 20

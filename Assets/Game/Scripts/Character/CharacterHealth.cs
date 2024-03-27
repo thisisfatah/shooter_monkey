@@ -18,7 +18,7 @@ public class CharacterHealth : MonoBehaviour
 	public float Health { get { return health; } set { health = value; } }
 	public float MaxHealth { get { return maxhealth; } private set { maxhealth = value; } }
 
-	public UnityEvent OnLandEvent;
+	public UnityEvent OnDieEvent;
 
 	public virtual void IncreaseHealth(float value)
 	{
@@ -29,8 +29,8 @@ public class CharacterHealth : MonoBehaviour
 
 		if (health <= 0)
 		{
-			if (OnLandEvent != null)
-				OnLandEvent.Invoke();
+			if (OnDieEvent != null)
+				OnDieEvent.Invoke();
 		}
 	}
 

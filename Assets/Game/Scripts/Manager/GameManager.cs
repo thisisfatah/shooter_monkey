@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] Weapon weapon;
 	[SerializeField] WeaponContainer weaponContainer;
 	[SerializeField] TextMeshProUGUI ammoText;
+	[SerializeField] GameObject levelVictoryPanel;
 
 	WeaponData weaponData;
 
@@ -83,6 +84,8 @@ public class GameManager : MonoBehaviour
 		{
 			ChangeWeapon(4);
 		}
+
+		Debug.Log(DataScore.Score.ToString());
 	}
 
 	public static int BulletSpawnCount()
@@ -137,5 +140,15 @@ public class GameManager : MonoBehaviour
 
 		weaponToReload.ammo = weaponToReload.maxAmmo;
 		weaponToReload.isReload = false;
+	}
+
+	public void PopupPanelGameOver(bool show)
+	{
+		levelVictoryPanel.SetActive(show);
+	}
+
+	public double Distance()
+	{
+		return GetComponent<DistanceManager>().distanceFloor;
 	}
 }

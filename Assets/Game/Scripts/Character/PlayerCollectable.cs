@@ -1,12 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class PlayerCollectable : MonoBehaviour
 {
-	[SerializeField] int Letter;
+	[HideInInspector] public int Letter;
 	[SerializeField] GameObject HorseObject;
 	[SerializeField] Transform horseLocation;
 	[SerializeField] float horseColdown = 20f;
@@ -16,9 +13,15 @@ public class PlayerCollectable : MonoBehaviour
 
 	private void Update()
 	{
-		if(getHorse)
+		if (getHorse)
 		{
 			if (horseTime < horseColdown) horseTime += Time.deltaTime;
+
+			if (horseTime >= 5)
+			{
+				PlayerController2D controller2D = GetComponent<PlayerController2D>();
+				controller2D.m_multipleSpeed = 1.5f;
+			}
 
 			if (horseTime >= horseColdown)
 			{
@@ -30,24 +33,33 @@ public class PlayerCollectable : MonoBehaviour
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.tag == "Letter")
+		if (collision.tag == "Letter")
 		{
-			Destroy(collision.gameObject);
 			Letter++;
 			Debug.Log("Collected Letter = " + Letter.ToString());
 			if (Letter >= 5)
 			{
 				Letter = 0;
 				PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+				PlayerController2D controller2D = GetComponent<PlayerController2D>();
 				PlayerHealth playerHealth = GetComponent<PlayerHealth>();
 				playerHealth.MultipleHealth();
 				playerMovement.jump = true;
 				playerMovement.multiplierRunSpeed = true;
+				controller2D.m_multipleSpeed = 2f;
 				getHorse = true;
 				StartCoroutine(SpawnDelay());
 			}
+			Destroy(collision.gameObject);
+		}
+
+		if (collision.tag == "Banana")
+		{
+			DataScore.Score += 2;
+			DataScore.Banana += 1;
+			Destroy(collision.gameObject);
 		}
 	}
 

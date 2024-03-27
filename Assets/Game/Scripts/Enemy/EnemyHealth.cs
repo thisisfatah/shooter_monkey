@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class EnemyHealth : CharacterHealth
 {
+	[SerializeField] int score;
 	private void Start()
 	{
-		OnLandEvent.AddListener(KilledEnemy);
+		OnDieEvent.AddListener(KilledEnemy);
 	}
 
 	void KilledEnemy()
 	{
+		DataScore.Score += score;
+		DataScore.Kill += 1;
 		Destroy(gameObject);
 	}
 }

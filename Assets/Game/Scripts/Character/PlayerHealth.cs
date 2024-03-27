@@ -19,15 +19,12 @@ public class PlayerHealth : CharacterHealth
 		healthImg.fillAmount = Health / MaxHealth;
 
 		defaultSprite = ChangeMonkeyImg.sprite;
+
+		OnDieEvent.AddListener(GameOver);
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.T))
-		{
-			IncreaseHealth(3);
-		}
-
 		if (SkillData.CanSkill)
 		{
 			if (canMultipleHelath)
@@ -99,5 +96,10 @@ public class PlayerHealth : CharacterHealth
 		{
 			healthImg.fillAmount = Health / MaxHealth;
 		}
+	}
+
+	void GameOver()
+	{
+		GameManager.Instance.PopupPanelGameOver(true);
 	}
 }
