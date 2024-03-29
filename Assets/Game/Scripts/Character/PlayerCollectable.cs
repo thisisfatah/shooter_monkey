@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class PlayerCollectable : MonoBehaviour
@@ -7,9 +8,15 @@ public class PlayerCollectable : MonoBehaviour
 	[SerializeField] GameObject HorseObject;
 	[SerializeField] Transform horseLocation;
 	[SerializeField] float horseColdown = 20f;
+	[SerializeField] TextMeshProUGUI bananaText;
 	GameObject horse;
 	float horseTime;
 	bool getHorse = false;
+
+	private void Start()
+	{
+		bananaText.text = DataScore.Banana.ToString();
+	}
 
 	private void Update()
 	{
@@ -59,6 +66,7 @@ public class PlayerCollectable : MonoBehaviour
 		{
 			DataScore.Score += 2;
 			DataScore.Banana += 1;
+			bananaText.text = DataScore.Banana.ToString();
 			Destroy(collision.gameObject);
 		}
 	}
